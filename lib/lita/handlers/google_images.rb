@@ -6,6 +6,14 @@ require "faraday"
 module Lita
   module Handlers
     class GoogleImages < Handler
+      def self.help
+        name = Lita.config.robot.mention_name || Lita.config.robot.name
+
+        {
+          "#{name}: image QUERY" => "Displays a random image from Google Images matching the query."
+        }
+      end
+
       URL = "https://ajax.googleapis.com/ajax/services/search/images"
 
       route(/(?:image|img)(?:\s+me)? (.+)/, to: :fetch)

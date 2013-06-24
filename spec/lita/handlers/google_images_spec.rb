@@ -6,6 +6,12 @@ describe Lita::Handlers::GoogleImages, lita: true do
   it { routes("#{robot.name}: img foo").to(:fetch) }
   it { routes("#{robot.name}: img me foo").to(:fetch) }
 
+  describe ".help" do
+    it "returns a hash of command help" do
+      expect(described_class.help).to be_a(Hash)
+    end
+  end
+
   describe "#foo" do
     let(:response) { double("Faraday::Response") }
 

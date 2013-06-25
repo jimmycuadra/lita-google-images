@@ -16,11 +16,15 @@ gem "lita-google-images"
 
 ## Configuration
 
-Set `safe_search` to `false` if you want to allow explicit images. (Default is `true`.)
+### Optional attributes
+
+* `safe_search` (String, Symbol) - The safe search setting to use when querying for images. Possible values are `:active`, `:moderate`, and `:off`. Default: `:active`.
+
+### Example
 
 ```
 Lita.configure do |config|
-  config.handlers.google_images.safe_search = false
+  config.handlers.google_images.safe_search = :off
 end
 ```
 

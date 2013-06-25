@@ -16,7 +16,7 @@ module Lita
 
       URL = "https://ajax.googleapis.com/ajax/services/search/images"
 
-      route(/(?:image|img)(?:\s+me)? (.+)/, to: :fetch)
+      route(/(?:image|img)(?:\s+me)? (.+)/, to: :fetch, command: true)
 
       def fetch(matches)
         query = matches[0][0]

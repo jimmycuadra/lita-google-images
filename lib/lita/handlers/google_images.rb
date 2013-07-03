@@ -8,14 +8,14 @@ module Lita
     class GoogleImages < Handler
       URL = "https://ajax.googleapis.com/ajax/services/search/images"
 
-      route(/(?:image|img)(?:\s+me)? (.+)/, to: :fetch, command: true, help: {
+      route(/(?:image|img)(?:\s+me)? (.+)/, :fetch, command: true, help: {
         "image QUERY" => "Displays a random image from Google Images matching the query."
       })
 
-      def fetch(matches)
-        query = matches[0][0]
+      def fetch(response)
+        query = response.matches[0][0]
 
-        response = Faraday.get(
+        http_response = Faraday.get(
           URL,
           v: "1.0",
           q: query,
@@ -23,11 +23,11 @@ module Lita
           rsz: 8
         )
 
-        data = MultiJson.load(response.body)
+        data = MultiJson.load(http_response.body)
 
         if data["responseStatus"] == 200
           choice = data["responseData"]["results"].sample
-          reply "#{choice["unescapedUrl"]}#.png"
+          response.reply "#{choice["unescapedUrl"]}#.png"
         else
           reason = data["responseDetails"] || "unknown error"
           Lita.logger.warn(

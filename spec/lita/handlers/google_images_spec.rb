@@ -1,10 +1,10 @@
 require "spec_helper"
 
 describe Lita::Handlers::GoogleImages, lita: true do
-  it { routes("#{robot.name}: image me foo").to(:fetch) }
-  it { routes("#{robot.name}: image foo").to(:fetch) }
-  it { routes("#{robot.name}: img foo").to(:fetch) }
-  it { routes("#{robot.name}: img me foo").to(:fetch) }
+  it { routes_command("image me foo").to(:fetch) }
+  it { routes_command("image foo").to(:fetch) }
+  it { routes_command("img foo").to(:fetch) }
+  it { routes_command("img me foo").to(:fetch) }
 
   describe "#foo" do
     let(:response) { double("Faraday::Response") }
@@ -25,8 +25,10 @@ describe Lita::Handlers::GoogleImages, lita: true do
 }
 JSON
       )
-      expect_reply("http://www.example.com/path/to/an/image.jpg#.png")
-      send_test_message("Lita: image carl")
+      send_command("image carl")
+      expect(replies.last).to eq(
+        "http://www.example.com/path/to/an/image.jpg#.png"
+      )
     end
 
     it "logs a warning on failure" do
@@ -37,9 +39,9 @@ JSON
 }
 JSON
       )
-      expect_no_reply
       expect(Lita.logger).to receive(:warn).with(/google fail/)
-      send_test_message("Lita: image carl")
+      send_command("image carl")
+      expect(replies).to be_empty
     end
   end
 end

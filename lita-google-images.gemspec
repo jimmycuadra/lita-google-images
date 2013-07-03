@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = "lita-google-images"
-  spec.version       = "0.0.2"
+  spec.version       = "1.0.0"
   spec.authors       = ["Jimmy Cuadra"]
   spec.email         = ["jimmy@jimmycuadra.com"]
   spec.description   = %q{A Lita handler for fetching images from Google.}
@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "lita", "~> 1.0"
+  spec.add_runtime_dependency "lita", "~> 2.0"
   spec.add_runtime_dependency "multi_json", "~> 1.7"
   spec.add_runtime_dependency "faraday", "~> 0.8"
 

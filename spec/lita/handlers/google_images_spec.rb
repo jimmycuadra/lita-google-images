@@ -9,7 +9,11 @@ describe Lita::Handlers::GoogleImages, lita_handler: true do
   describe "#foo" do
     let(:response) { double("Faraday::Response") }
 
-    before { allow(Faraday).to receive(:get).and_return(response) }
+    before do
+      allow_any_instance_of(
+        Faraday::Connection
+      ).to receive(:get).and_return(response)
+    end
 
     it "replies with a matching image URL on success" do
       allow(response).to receive(:body).and_return(<<-JSON.chomp

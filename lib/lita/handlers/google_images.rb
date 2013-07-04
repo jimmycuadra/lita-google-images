@@ -1,8 +1,5 @@
 require "lita"
 
-require "multi_json"
-require "faraday"
-
 module Lita
   module Handlers
     class GoogleImages < Handler
@@ -19,7 +16,7 @@ module Lita
       def fetch(response)
         query = response.matches[0][0]
 
-        http_response = Faraday.get(
+        http_response = http.get(
           URL,
           v: "1.0",
           q: query,

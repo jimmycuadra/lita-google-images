@@ -12,6 +12,10 @@ module Lita
         "image QUERY" => "Displays a random image from Google Images matching the query."
       })
 
+      def self.default_config(handler_config)
+        handler_config.safe_search = :active
+      end
+
       def fetch(response)
         query = response.matches[0][0]
 

@@ -47,8 +47,6 @@ module Lita
       end
     end
 
-    Lita.config.handlers.google_images = Config.new
-    Lita.config.handlers.google_images.safe_search = :active
     Lita.register_handler(GoogleImages)
   end
 end

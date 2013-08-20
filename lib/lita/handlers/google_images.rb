@@ -28,7 +28,11 @@ module Lita
 
         if data["responseStatus"] == 200
           choice = data["responseData"]["results"].sample
-          response.reply "#{choice["unescapedUrl"]}#.png"
+          if choice
+            response.reply "#{choice["unescapedUrl"]}#.png"
+          else
+            response.reply %{No images found for "#{query}".}
+          end
         else
           reason = data["responseDetails"] || "unknown error"
           Lita.logger.warn(

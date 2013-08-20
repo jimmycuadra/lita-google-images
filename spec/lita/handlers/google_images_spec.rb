@@ -35,6 +35,15 @@ JSON
       )
     end
 
+    it "replies that no images were found if the results are empty" do
+      allow(response).to receive(:body).and_return(<<-JSON.chomp
+{"responseStatus": 200, "responseData": { "results": [] } }
+JSON
+      )
+      send_command("image carl")
+      expect(replies.last).to eq(%{No images found for "carl".})
+    end
+
     it "logs a warning on failure" do
       allow(response).to receive(:body).and_return(<<-JSON.chomp
 {

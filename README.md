@@ -1,6 +1,6 @@
 # lita-google-images
 
-[![Build Status](https://travis-ci.org/jimmycuadra/lita-google-images.png)](https://travis-ci.org/jimmycuadra/lita-google-images)
+[![Build Status](https://travis-ci.org/jimmycuadra/lita-google-images.png?branch=master)](https://travis-ci.org/jimmycuadra/lita-google-images)
 [![Code Climate](https://codeclimate.com/github/jimmycuadra/lita-google-images.png)](https://codeclimate.com/github/jimmycuadra/lita-google-images)
 [![Coverage Status](https://coveralls.io/repos/jimmycuadra/lita-google-images/badge.png)](https://coveralls.io/r/jimmycuadra/lita-google-images)
 

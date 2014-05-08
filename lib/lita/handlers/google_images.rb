@@ -29,7 +29,7 @@ module Lita
         if data["responseStatus"] == 200
           choice = data["responseData"]["results"].sample
           if choice
-            response.reply "#{choice["unescapedUrl"]}#.png"
+            response.reply ensure_extension(choice["unescapedUrl"])
           else
             response.reply %{No images found for "#{query}".}
           end
@@ -42,6 +42,14 @@ module Lita
       end
 
       private
+
+      def ensure_extension(url)
+        if [".gif", ".jpg", ".jpeg", ".png"].any? { |ext| url.end_with?(ext) }
+          url
+        else
+          "#{url}#.png"
+        end
+      end
 
       def safe_value
         safe = Lita.config.handlers.google_images.safe_search || "active"

@@ -22,6 +22,26 @@ describe Lita::Handlers::GoogleImages, lita_handler: true do
   "responseData": {
     "results": [
       {
+        "unescapedUrl": "http://www.example.com/path/to/an/image"
+      }
+    ]
+  }
+}
+JSON
+      )
+      send_command("image carl")
+      expect(replies.last).to eq(
+        "http://www.example.com/path/to/an/image#.png"
+      )
+    end
+
+    it "doesn't append a fake file extension if the image URL has a common image extension" do
+      allow(response).to receive(:body).and_return(<<-JSON.chomp
+{
+  "responseStatus": 200,
+  "responseData": {
+    "results": [
+      {
         "unescapedUrl": "http://www.example.com/path/to/an/image.jpg"
       }
     ]
@@ -31,7 +51,7 @@ JSON
       )
       send_command("image carl")
       expect(replies.last).to eq(
-        "http://www.example.com/path/to/an/image.jpg#.png"
+        "http://www.example.com/path/to/an/image.jpg"
       )
     end
 

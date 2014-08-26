@@ -1,4 +1,5 @@
 require "lita"
+require "socket"
 
 module Lita
   module Handlers
@@ -21,7 +22,8 @@ module Lita
           v: "1.0",
           q: query,
           safe: safe_value,
-          rsz: 8
+          rsz: 8, 
+          userip: (IPSocket.getaddress(Socket.gethostname) rescue nil)
         )
 
         data = MultiJson.load(http_response.body)

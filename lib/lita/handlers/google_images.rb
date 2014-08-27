@@ -14,7 +14,7 @@ module Lita
       end
 
       def fetch(response)
-        query = response.matches[0][0]
+        query = get_query(response)
 
         http_response = http.get(
           URL,
@@ -39,6 +39,10 @@ module Lita
             "Couldn't get image from Google: #{reason}"
           )
         end
+      end
+
+      def get_query(response)
+        response.matches[0][0]
       end
 
       private

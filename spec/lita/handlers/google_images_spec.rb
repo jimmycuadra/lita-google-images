@@ -1,10 +1,10 @@
 require "spec_helper"
 
 describe Lita::Handlers::GoogleImages, lita_handler: true do
-  it { routes_command("image me foo").to(:fetch) }
-  it { routes_command("image foo").to(:fetch) }
-  it { routes_command("img foo").to(:fetch) }
-  it { routes_command("img me foo").to(:fetch) }
+  it { is_expected.to route_command("image me foo").to(:fetch) }
+  it { is_expected.to route_command("image foo").to(:fetch) }
+  it { is_expected.to route_command("img foo").to(:fetch) }
+  it { is_expected.to route_command("img me foo").to(:fetch) }
 
   describe "#foo" do
     let(:response) { double("Faraday::Response") }

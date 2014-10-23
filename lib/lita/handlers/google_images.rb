@@ -4,14 +4,19 @@ module Lita
   module Handlers
     class GoogleImages < Handler
       URL = "https://ajax.googleapis.com/ajax/services/search/images"
+      VALID_SAFE_VALUES = %w(active moderate off)
+
+      config :safe_search, types: [String, Symbol], default: :active do
+        validate do |value|
+          unless VALID_SAFE_VALUES.include?(value.to_s.strip)
+            "valid values are :active, :moderate, or :off"
+          end
+        end
+      end
 
       route(/(?:image|img)(?:\s+me)? (.+)/, :fetch, command: true, help: {
         "image QUERY" => "Displays a random image from Google Images matching the query."
       })
-
-      def self.default_config(handler_config)
-        handler_config.safe_search = :active
-      end
 
       def fetch(response)
         query = response.matches[0][0]
@@ -20,7 +25,7 @@ module Lita
           URL,
           v: "1.0",
           q: query,
-          safe: safe_value,
+          safe: config.safe_search,
           rsz: 8
         )
 
@@ -49,13 +54,6 @@ module Lita
         else
           "#{url}#.png"
         end
-      end
-
-      def safe_value
-        safe = Lita.config.handlers.google_images.safe_search || "active"
-        safe = safe.to_s.downcase
-        safe = "active" unless ["active", "moderate", "off"].include?(safe)
-        safe
       end
     end
 

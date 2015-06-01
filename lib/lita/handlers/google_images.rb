@@ -14,7 +14,7 @@ module Lita
         end
       end
 
-      route(/(?:image|img)(?:\s+me)? (.+)/, :fetch, command: true, help: {
+      route(/(?:image|img)(?:\s+me)? (.+)/i, :fetch, command: true, help: {
         "image QUERY" => "Displays a random image from Google Images matching the query."
       })
 

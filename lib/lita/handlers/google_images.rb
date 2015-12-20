@@ -14,7 +14,7 @@ module Lita
         end
       end
 
-      config :google_cse_id, types: [Sting], default: "my-id-here" do
+      config :google_cse_id, types: [String], default: "my-id-here" do
         validate do |value|
           if value.empty?
             "Set your google cse id at configuration file"

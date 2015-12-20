@@ -16,7 +16,7 @@ module Lita
 
       config :google_cse_id, default: "" do
         validate do |value|
-          unless value.present?
+          if value.empty?
             "Set your google cse id at configuration file"
           end
         end
@@ -24,7 +24,7 @@ module Lita
 
       config :google_cse_key, default: "" do
         validate do |value|
-          unless value.present?
+          if value.empty?
             "Set your google cse key at configuration file"
           end
         end

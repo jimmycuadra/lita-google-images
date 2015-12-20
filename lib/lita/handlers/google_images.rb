@@ -29,8 +29,8 @@ module Lita
           safe: config.safe_search,
           fields: 'items(link)',
           rsz: 8,
-          cx: ENV["GOOGLE_CSE_ID"],
-          key: ENV["GOOGLE_CSE_KEY"]
+          cx: config.google_cse_id,
+          key: config.google_cse_key
         )
 
         data = MultiJson.load(http_response.body)

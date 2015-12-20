@@ -42,8 +42,8 @@ Lita: img me carl the pug
 Do not forget to set the Google Custom Search ID and Google Api environment attributes
 
 ```
-ENV["GOOGLE_CSE_ID"]
-ENV["GOOGLE_CSE_KEY"]
+config.handlers.google_images.google_cse_id = "my_google_custom_search_id_here"
+config.handlers.google_images.google_cse_key = "my_google_api_key_here"
 ```
 
 The second form is for those coming from [Hubot](http://hubot.github.com/).

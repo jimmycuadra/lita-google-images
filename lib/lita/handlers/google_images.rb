@@ -3,16 +3,19 @@ require "lita"
 module Lita
   module Handlers
     class GoogleImages < Handler
-      URL = "https://ajax.googleapis.com/ajax/services/search/images"
-      VALID_SAFE_VALUES = %w(active moderate off)
+      URL = "https://www.googleapis.com/customsearch/v1"
+      VALID_SAFE_VALUES = %w(high medium off)
 
-      config :safe_search, types: [String, Symbol], default: :active do
+      config :safe_search, types: [String, Symbol], default: :high do
         validate do |value|
           unless VALID_SAFE_VALUES.include?(value.to_s.strip)
-            "valid values are :active, :moderate, or :off"
+            "valid values are :high, :medium, or :off"
           end
         end
       end
+
+      config :google_cse_id, type: String, required: true
+      config :google_cse_key, type: String, required: true
 
       route(/(?:image|img)(?:\s+me)? (.+)/i, :fetch, command: true, help: {
         "image QUERY" => "Displays a random image from Google Images matching the query."
@@ -24,22 +27,26 @@ module Lita
         http_response = http.get(
           URL,
           v: "1.0",
+          searchType: 'image',
           q: query,
           safe: config.safe_search,
-          rsz: 8
+          fields: 'items(link)',
+          rsz: 8,
+          cx: config.google_cse_id,
+          key: config.google_cse_key
         )
 
         data = MultiJson.load(http_response.body)
 
-        if data["responseStatus"] == 200
-          choice = data["responseData"]["results"].sample
+        if http_response.status == 200
+          choice = data["items"].sample if data["items"]
           if choice
-            response.reply ensure_extension(choice["unescapedUrl"])
+            response.reply ensure_extension(choice["link"])
           else
             response.reply %{No images found for "#{query}".}
           end
         else
-          reason = data["responseDetails"] || "unknown error"
+          reason = data["error"]["message"] || "unknown error"
           Lita.logger.warn(
             "Couldn't get image from Google: #{reason}"
           )

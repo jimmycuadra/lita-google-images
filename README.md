@@ -18,7 +18,7 @@ gem "lita-google-images"
 
 ### Optional attributes
 
-* `safe_search` (String, Symbol) - The safe search setting to use when querying for images. Possible values are `:active`, `:moderate`, and `:off`. Default: `:active`.
+* `safe_search` (String, Symbol) - The safe search setting to use when querying for images. Possible values are `:high`, `:medium`, and `:off`. Default: `:high`.
 
 ### Example
 
@@ -37,6 +37,13 @@ Lita: image carl the pug
 Lita: image me carl the pug
 Lita: img carl the pug
 Lita: img me carl the pug
+```
+
+Do not forget to set the Google Custom Search ID and Google Api on your config
+
+```
+config.handlers.google_images.google_cse_id = "my_google_custom_search_id_here"
+config.handlers.google_images.google_cse_key = "my_google_api_key_here"
 ```
 
 The second form is for those coming from [Hubot](http://hubot.github.com/).

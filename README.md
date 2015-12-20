@@ -39,7 +39,7 @@ Lita: img carl the pug
 Lita: img me carl the pug
 ```
 
-Do not forget to set the Google Custom Search ID and Google Api environment attributes
+Do not forget to set the Google Custom Search ID and Google Api on your config
 
 ```
 config.handlers.google_images.google_cse_id = "my_google_custom_search_id_here"

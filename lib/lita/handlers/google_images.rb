@@ -1,5 +1,4 @@
 require "lita"
-require "pry"
 
 module Lita
   module Handlers

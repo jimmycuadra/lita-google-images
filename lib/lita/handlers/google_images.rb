@@ -14,21 +14,8 @@ module Lita
         end
       end
 
-      config :google_cse_id, types: [String], default: "" do
-        validate do |value|
-          if value.empty?
-            "Set your google cse id at configuration file"
-          end
-        end
-      end
-
-      config :google_cse_key, types: [String], default: "" do
-        validate do |value|
-          if value.empty?
-            "Set your google cse key at configuration file"
-          end
-        end
-      end
+      config :google_cse_id, type: String, required: true
+      config :google_cse_key, type: String, required: true
 
       route(/(?:image|img)(?:\s+me)? (.+)/i, :fetch, command: true, help: {
         "image QUERY" => "Displays a random image from Google Images matching the query."

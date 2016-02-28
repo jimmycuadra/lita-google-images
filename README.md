@@ -46,7 +46,16 @@ Lita: img carl the pug
 Lita: img me carl the pug
 ```
 
-The second form is for those coming from [Hubot](http://hubot.github.com/).
+The following are all equivalent ways of askign Lita to search for an animated GIF of "carl the pug":
+
+```
+Lita: animate carl the pug
+Lita: animate me carl the pug
+Lita: gif carl the pug
+Lita: gif me carl the pug
+```
+
+The second form ("verb me") is to ease the transition for people coming from [Hubot](http://hubot.github.com/).
 
 ## License
 

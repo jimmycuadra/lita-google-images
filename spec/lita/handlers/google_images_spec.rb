@@ -7,6 +7,12 @@ describe Lita::Handlers::GoogleImages, lita_handler: true do
   it { is_expected.to route_command("img me foo").to(:fetch) }
   it { is_expected.to route_command("IMAGE FOO").to(:fetch) }
 
+  it { is_expected.to route_command("animate me foo").to(:fetch_anim) }
+  it { is_expected.to route_command("animate foo").to(:fetch_anim) }
+  it { is_expected.to route_command("gif foo").to(:fetch_anim) }
+  it { is_expected.to route_command("gif me foo").to(:fetch_anim) }
+  it { is_expected.to route_command("ANIMATE FOO").to(:fetch_anim) }
+
   describe "#foo" do
     let(:response) { double("Faraday::Response", status: 200,) }
     let(:fail_response) { double("Faraday::Response", status: 500) }
@@ -59,6 +65,23 @@ JSON
         )
         send_command("image carl")
         expect(replies.last).to eq(%{No images found for "carl".})
+      end
+
+      it 'replies with an animation when requested' do
+        allow(response).to receive(:body).and_return(<<-JSON.chomp
+{
+  "items": [
+    {
+      "link": "http://www.example.com/path/to/an/animation.gif"
+    }
+  ]
+}
+JSON
+        )
+        send_command("animate carl")
+        expect(replies.last).to eq(
+          "http://www.example.com/path/to/an/animation.gif"
+        )
       end
     end
 

@@ -21,11 +21,18 @@ module Lita
         "image QUERY" => "Displays a random image from Google Images matching the query."
       })
 
-      def fetch(response)
+      route(/(?:animate|gif)(?:\s+me)? (.+)/i, :fetch_anim, command: true, help: {
+        "animate QUERY" => "Displays a random animation from Google Images matching the query."
+      })
+
+      def fetch_anim(response)
+        fetch(response, true)
+      end
+
+      def fetch(response, animated = false)
         query = response.matches[0][0]
 
-        http_response = http.get(
-          URL,
+        query_params = {
           v: "1.0",
           searchType: 'image',
           q: query,
@@ -34,6 +41,20 @@ module Lita
           rsz: 8,
           cx: config.google_cse_id,
           key: config.google_cse_key
+        }
+
+        if animated
+          animated_params = {
+            fileType: "gif",
+            hq: "animated",
+            tbs: "itp:animated"
+          }
+          query_params.merge!(animated_params)
+        end
+
+        http_response = http.get(
+          URL,
+          query_params
         )
 
         data = MultiJson.load(http_response.body)

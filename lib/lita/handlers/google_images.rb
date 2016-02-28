@@ -26,7 +26,7 @@ module Lita
       })
 
       def fetch_anim(response)
-        fetch(response, animated = true)
+        fetch(response, true)
       end
 
       def fetch(response, animated = false)
@@ -43,7 +43,14 @@ module Lita
           key: config.google_cse_key
         }
 
-        query_params["fileType"] = "gif" if animated
+        if animated
+          animated_params = {
+            fileType: "gif",
+            hq: "animated",
+            tbs: "itp:animated"
+          }
+          query_params.merge!(animated_params)
+        end
 
         http_response = http.get(
           URL,
